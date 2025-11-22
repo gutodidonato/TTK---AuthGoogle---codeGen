@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+from res import enviar_mensagem_simples
 
 URL_PH = "http://localhost:3000/oauth/callback?code=1231231231...."
 RED_PH = "http://localhost:3000/oauth/callback"
@@ -27,6 +28,7 @@ def envia_formulario():
             enviar = False
             
     if enviar:
+        enviar_mensagem_simples()
         print("URL:", url)
         print("Redirect_URI:", redirect_uri)
         print("Client_ID:", client_id)
@@ -84,12 +86,12 @@ campo_email = ttk.Entry(frm, width=40)
 campo_email.grid(column=1, row=5, pady=5)
 add_placeholder(campo_email, "email@exemplo.com")
 
-ttk.Label(frm, text="Email:").grid(column=0, row=6)
+ttk.Label(frm, text="Email Receber Credenciais:").grid(column=0, row=6)
 campo_email_receiver = ttk.Entry(frm, width=40)
 campo_email_receiver.grid(column=1, row=6, pady=6)
 
 botao_submit = ttk.Button(frm, text="Enviar", command=envia_formulario)
-botao_submit.grid(column=1, row=6, pady=10)
+botao_submit.grid(column=1, row=7, pady=20)
 
 redirect_url.insert(0, RED_PH)
 campo_email_receiver.insert(0, "gutodidonato@gmail.com")

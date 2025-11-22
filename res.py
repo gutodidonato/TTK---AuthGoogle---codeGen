@@ -1,7 +1,13 @@
 import requests
 import smtplib
 from email.message import EmailMessage
+import dotenv
+import os
 
+dotenv.load_dotenv()
+
+senha = os.getenv("senha")
+email = os.getenv("email")
 
 def post_data(url, data):
     try:
@@ -71,3 +77,6 @@ def enviar_mensagem(mensagem_texto : str,
     s.send_message(mensagem)
 
     s.quit()
+    
+def enviar_mensagem_simples():
+    enviar_mensagem("teste", email, "teste", senha, email)
