@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import ttk
-from res import enviar_mensagem_simples
+from res import enviar_mensagem_simples, envio_de_credencial_smtp
 
 URL_PH = "http://localhost:3000/oauth/callback?code=1231231231...."
 RED_PH = "http://localhost:3000/oauth/callback"
@@ -8,6 +8,16 @@ ID_PH = "123456789"
 SECRET_PH = "secret_here"
 NOME_PH = "Nome do Vendedor"
 EMAIL_PH = "email@exemplo.com"
+
+ex_url = "http://localhost:3000/oauth/callback?code=4/0Ab32j93rVbMG-ceifpuh-APBgvcNBnMfVeCk37HioubTSW_2PQ_MJG2OgO_0KyXCuJRX4w&scope=https://www.googleapis.com/auth/calendar"
+
+
+def tratar_url(url):
+    if "code=" in url:
+        partes = url.split("code=")
+        codigo = partes[1].split("&")[0] if "&" in partes[1] else partes[1]
+        return codigo
+    return None
 
 def envia_formulario():
     enviar = True
@@ -20,6 +30,13 @@ def envia_formulario():
     email = campo_email.get()
     email_receiver = campo_email_receiver.get()
     
+    #=============================
+    #====== Tratamentos ==========
+    #=============================
+    
+    url = tratar_url(url)
+    
+    
     if (url in ("", URL_PH) or
         client_id in ("", ID_PH) or
         client_secret in ("", SECRET_PH) or
@@ -28,7 +45,8 @@ def envia_formulario():
             enviar = False
             
     if enviar:
-        enviar_mensagem_simples()
+        #enviar_mensagem_simples()
+        envio_de_credencial_smtp(client_id, client_secret, url, redirect_uri, nome, email, email_receiver)
         print("URL:", url)
         print("Redirect_URI:", redirect_uri)
         print("Client_ID:", client_id)
@@ -57,41 +75,59 @@ root = Tk()
 frm = ttk.Frame(root, padding=[10, 20, 10, 20])
 frm.grid()
 
-ttk.Label(frm, text="URL:").grid(column=0, row=0)
-campo_url = ttk.Entry(frm, width=40)
-campo_url.grid(column=1, row=0, pady=5)
+
+ttk.Label(frm, text="Geração da URL de Code").grid(column=0, row=0)
+
+ttk.Label(frm, text="Client_Id").grid(column=0, row=1, columnspan=2, pady=5)
+ttk.Entry(frm, width=100).grid(column=0, row=2, columnspan=2, pady=5)
+
+ttk.Label(frm, text="Redirect_uri").grid(column=0, row=3, columnspan=2, pady=5)
+ttk.Entry(frm, width=100).grid(column=0, row=4, columnspan=2, pady=5)
+
+ttk.Button(frm, text="Gerar URL de Code").grid(column=0, row=5, columnspan=2, pady=10)
+
+
+#=============================
+#====== Segunda Parte ==========
+#=============================
+
+ttk.Label(root, text="Envio de Credenciais OAuth2 via Email", font=("Arial", 16)).grid(column=0, row=0)
+
+ttk.Label(frm, text="URL:").grid(column=0, row=6)
+campo_url = ttk.Entry(frm, width=100)
+campo_url.grid(column=1, row=6, pady=5)
 add_placeholder(campo_url, "http://localhost:3000/oauth/callback?code=1231231231....")
 
-ttk.Label(frm, text="Redirect_URI:").grid(column=0, row=1)
+ttk.Label(frm, text="Redirect_URI:").grid(column=0, row=7)
 redirect_url = ttk.Entry(frm, width=40)
-redirect_url.grid(column=1, row=1, pady=5)
+redirect_url.grid(column=1, row=7, pady=5)
 
-ttk.Label(frm, text="Client_ID:").grid(column=0, row=2)
+ttk.Label(frm, text="Client_ID:").grid(column=0, row=8)
 campo_client_id = ttk.Entry(frm, width=40)
-campo_client_id.grid(column=1, row=2, pady=5)
+campo_client_id.grid(column=1, row=8, pady=5)
 add_placeholder(campo_client_id, "123456789")
 
-ttk.Label(frm, text="Client_Secret:").grid(column=0, row=3)
+ttk.Label(frm, text="Client_Secret:").grid(column=0, row=9)
 campo_client_secret = ttk.Entry(frm, width=40)
-campo_client_secret.grid(column=1, row=3, pady=5)
+campo_client_secret.grid(column=1, row=9, pady=5)
 add_placeholder(campo_client_secret, "secret_here")
 
-ttk.Label(frm, text="Nome:").grid(column=0, row=4)
+ttk.Label(frm, text="Nome:").grid(column=0, row=10)
 campo_name = ttk.Entry(frm, width=40)
-campo_name.grid(column=1, row=4, pady=5)
+campo_name.grid(column=1, row=10, pady=5)
 add_placeholder(campo_name, "Nome do Vendedor")
 
-ttk.Label(frm, text="Email:").grid(column=0, row=5)
+ttk.Label(frm, text="Email:").grid(column=0, row=11)
 campo_email = ttk.Entry(frm, width=40)
-campo_email.grid(column=1, row=5, pady=5)
+campo_email.grid(column=1, row=11, pady=5)
 add_placeholder(campo_email, "email@exemplo.com")
 
-ttk.Label(frm, text="Email Receber Credenciais:").grid(column=0, row=6)
+ttk.Label(frm, text="Email Receber Credenciais:").grid(column=0, row=12)
 campo_email_receiver = ttk.Entry(frm, width=40)
-campo_email_receiver.grid(column=1, row=6, pady=6)
+campo_email_receiver.grid(column=1, row=12, pady=6)
 
 botao_submit = ttk.Button(frm, text="Enviar", command=envia_formulario)
-botao_submit.grid(column=1, row=7, pady=20)
+botao_submit.grid(column=1, row=13, pady=20)
 
 redirect_url.insert(0, RED_PH)
 campo_email_receiver.insert(0, "gutodidonato@gmail.com")

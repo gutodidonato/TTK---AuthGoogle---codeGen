@@ -8,7 +8,7 @@ dotenv.load_dotenv()
 
 senha = os.getenv("senha")
 email = os.getenv("email")
-
+ 
 def post_data(url, data):
     try:
         response = requests.post(url, json=data)
@@ -44,6 +44,7 @@ def envio_de_credencial_smtp(client_id, client_secret, code, redirect_uri, nome,
             mensagem_texto=f"Access Token: {access_token}\nRefresh Token: {refresh_token} \nClient ID: {client_id}\nClient Secret: {client_secret} \n Redirect URI: {redirect_uri} \n Nome: {nome}\n Email: {email}",
             sender=email,
             assunto=f"Credenciais OAuth2 - {nome} - {email}",
+            senha_pass_sv=senha,
             destinatario= destinatario
         )
         
