@@ -81,3 +81,17 @@ def enviar_mensagem(mensagem_texto : str,
     
 def enviar_mensagem_simples():
     enviar_mensagem("teste", email, "teste", senha, email)
+    
+    
+def gerar_url_code(client_id, redirect_uri):
+    base_url = "https://accounts.google.com/o/oauth2/v2/auth"
+    scope = "https://www.googleapis.com/auth/calendar"
+    response_type = "code"
+    
+    url = (f"{base_url}?client_id={client_id}"
+           f"&redirect_uri={redirect_uri}"
+           f"&response_type={response_type}"
+           f"&scope={scope}"
+           f"&access_type=offline"
+           f"&prompt=consent")
+    return url
