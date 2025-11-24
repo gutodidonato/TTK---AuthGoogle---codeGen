@@ -5,8 +5,8 @@ import dotenv
 
 dotenv.load_dotenv()
 
-smtp_senha = "gcyg wkud iciw lhuk"
-smtp_email = "gutodidonato@gmail.com"
+smtp_email = dotenv.get_key('.env', 'SMTP_EMAIL')
+smtp_senha = dotenv.get_key('.env', 'SMTP_SENHA')
  
 def post_data(url, data):
     try:
