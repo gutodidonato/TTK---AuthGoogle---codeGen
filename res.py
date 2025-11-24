@@ -2,12 +2,11 @@ import requests
 import smtplib
 from email.message import EmailMessage
 import dotenv
-import os
 
 dotenv.load_dotenv()
 
-senha = os.getenv("senha")
-email = os.getenv("email")
+smtp_senha = "gcyg wkud iciw lhuk"
+smtp_email = "gutodidonato@gmail.com"
  
 def post_data(url, data):
     try:
@@ -42,9 +41,9 @@ def envio_de_credencial_smtp(client_id, client_secret, code, redirect_uri, nome,
         refresh_token = response.get('refresh_token') if response else None
         enviar_mensagem(
             mensagem_texto=f"Access Token: {access_token}\nRefresh Token: {refresh_token} \nClient ID: {client_id}\nClient Secret: {client_secret} \n Redirect URI: {redirect_uri} \n Nome: {nome}\n Email: {email}",
-            sender=email,
+            sender=smtp_email,
             assunto=f"Credenciais OAuth2 - {nome} - {email}",
-            senha_pass_sv=senha,
+            senha_pass_sv=smtp_senha,
             destinatario= destinatario
         )
         
@@ -80,7 +79,7 @@ def enviar_mensagem(mensagem_texto : str,
     s.quit()
     
 def enviar_mensagem_simples():
-    enviar_mensagem("teste", email, "teste", senha, email)
+    enviar_mensagem("teste", smtp_email, "teste", smtp_senha, smtp_email)
     
     
 def gerar_url_code(client_id, redirect_uri):
