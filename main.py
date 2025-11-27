@@ -1,5 +1,5 @@
 from tkinter import *
-from tkinter import ttk
+from tkinter import ttk, messagebox
 from res import enviar_mensagem_simples, envio_de_credencial_smtp, gerar_url_code
 
 URL_PH = "http://localhost:3000/oauth/callback?code=1231231231...."
@@ -54,13 +54,15 @@ def envia_formulario():
             
     if enviar:
         #enviar_mensagem_simples()
-        envio_de_credencial_smtp(client_id, client_secret, url, redirect_uri, nome, email, email_receiver)
-        print("URL:", url)
-        print("Redirect_URI:", redirect_uri)
-        print("Client_ID:", client_id)
-        print("Client_Secret:", client_secret)
-        print("Nome:", nome)
-        print("Email:", email)
+        envio = envio_de_credencial_smtp(client_id, client_secret, url, redirect_uri, nome, email, email_receiver)
+    if envio:
+        print("Credenciais enviadas com sucesso!")
+        messagebox.showinfo("Sucesso", "Credenciais enviadas com sucesso!")
+    else:
+        print("Falha ao enviar as credenciais.")
+        messagebox.showerror("Erro", "Falha ao enviar as credenciais.")
+
+        
         
 def add_placeholder(entry, placeholder):
     entry.insert(0, placeholder)
@@ -135,7 +137,7 @@ campo_name = ttk.Entry(frm, width=40)
 campo_name.grid(column=1, row=11, pady=5)
 add_placeholder(campo_name, "Nome do Vendedor")
 
-ttk.Label(frm, text="Email:").grid(column=0, row=12)
+ttk.Label(frm, text="Email do Vendor:").grid(column=0, row=12)
 campo_email = ttk.Entry(frm, width=40)
 campo_email.grid(column=1, row=12, pady=5)
 add_placeholder(campo_email, "email@exemplo.com")
