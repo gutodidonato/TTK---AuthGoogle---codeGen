@@ -92,14 +92,17 @@ ttk.Label(frm, text="Geração da URL de Code", font=("Arial", 16)).grid(column=
 ttk.Label(frm, text="Client_Id").grid(column=0, row=1, pady=5)
 client_id_code = ttk.Entry(frm, width=100)
 client_id_code.grid(column=1, row=1, pady=5)
+add_placeholder(client_id_code, "1070886772496-bb034qh84ir8jq8ivamhfsfdqvjv1vck.apps.googleusercontent.com")
 
 ttk.Label(frm, text="Client_Secret").grid(column=0, row=2, pady=5)
 client_secret_code = ttk.Entry(frm, width=100)
 client_secret_code.grid(column=1, row=2, pady=5)
+add_placeholder(client_secret_code, "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")
 
 ttk.Label(frm, text="Redirect_uri").grid(column=0, row=3, pady=5)
 redirect_uri_code = ttk.Entry(frm, width=100)
 redirect_uri_code.grid(column=1, row=3, pady=5)
+add_placeholder(redirect_uri_code, RED_PH)
 
 ttk.Button(frm, text="Gerar URL de Code", command=tratar_url_code).grid(column=0, row=4, columnspan=2, pady=10)
 
@@ -121,6 +124,7 @@ add_placeholder(campo_url, "http://localhost:3000/oauth/callback?code=1231231231
 ttk.Label(frm, text="Redirect_URI:").grid(column=0, row=8)
 redirect_url = ttk.Entry(frm, width=40)
 redirect_url.grid(column=1, row=8, pady=5)
+add_placeholder(redirect_url, RED_PH)
 
 ttk.Label(frm, text="Client_ID:").grid(column=0, row=9)
 campo_client_id = ttk.Entry(frm, width=40)
@@ -145,11 +149,12 @@ add_placeholder(campo_email, "email@exemplo.com")
 ttk.Label(frm, text="Email Receber Credenciais:").grid(column=0, row=13)
 campo_email_receiver = ttk.Entry(frm, width=40)
 campo_email_receiver.grid(column=1, row=13, pady=6)
+add_placeholder(campo_email_receiver, "lais.madureira@patriacidadania.com.br")
 
 botao_submit = ttk.Button(frm, text="Enviar", command=envia_formulario)
 botao_submit.grid(column=1, row=14, pady=20)
 
-redirect_url.insert(0, RED_PH)
-redirect_uri_code.insert(0, RED_PH)
-campo_email_receiver.insert(0, "gutodidonato@gmail.com")
+#redirect_url.insert(0, RED_PH)
+#redirect_uri_code.insert(0, RED_PH)
+#campo_email_receiver.insert(0, "gutodidonato@gmail.com")
 root.mainloop()
